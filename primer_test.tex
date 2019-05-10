@@ -1,0 +1,421 @@
+% Created 2019-04-07 dom 12:47
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage[margin=1in]{geometry}
+\author{Yábir García Benchakhtir \\yabirgb@correo.ugr.es}
+\date{\today}
+\title{Apuntes sobre IA: Parte 1}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs 25.2.2 (Org mode 8.2.10)}}
+\begin{document}
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{3mm}
+
+\maketitle
+
+\section{Agentes}
+
+\subsection{El concepto de Agente}
+
+Un agente es un sistema asociado a una estructura de hardware, dotado
+de la capacidad de obtener información de su entorno y actuar en él,
+así como responder a los cambios en el mismo. A un agente se le
+pide que sea capaz de actuar de forma autónoma y ser flexible para
+lograr objetivos planteados.
+
+Cuando hablamos de autonomia nos referimos a que pueda actuar sin la
+intervención directa del ser humano, tiene control sobre sus acciones
+y su estado interno.
+
+Además los agentes no deberían limitarse a simplemente actuar en
+respuesta al entorno en el que se encuentran, también deben ser
+capaces de tomar iniciativa y actuar para conseguir objetivos
+parciales.
+
+Por úlimo una característica deseable es que sea social para servirse
+de la ayuda de otros agentes o de seres humanos para lograr su objetivo.
+
+En resumen, un sistema para ser un agente debe:
+
+\begin{itemize}
+\item Percibir su entorno y responder a los cambios que ocurren
+\item Ser proactivo, es decir, exhibir comportamientos dirigidos a lograr sus objetivos
+\item Ser autonomo, es deicr, actuar sin intervención humana y tener
+  control sobre sus acciones y estado.
+\end{itemize}
+
+\subsection{Agentes Racionales vs. Agentes Inteligentes}
+
+Decimos que un agente es racional cuando es capaz de actuar
+racionalmente. Esto quiere decir que depende de tomar mediciones de su
+entorno, tener conocimiento sobre el mismo y elegir entre un conjuntos
+de posibles acciones la que mejor resultado tenga para conseguir el
+objetivo que se propone.
+
+Un agente inteligente actua de manera similar, toma mediciones de su
+entorno usando sensores, tiene un conocimiento del medio pero además
+internamenete es capaz de comprender y tiene intencionalidad en sus
+acciones.
+
+Es decir, un agente inteligente no actua como una simple función que
+relaciona un conjunto de estados a un conjunto de acciones sino que
+comprende que es lo que está sucediendo y actua siguiendo su criterio.
+Si consideramos el \textit{Test de Turing} como un criterio valido
+para evaluar la inteligencia de un agente, podríamos decir que un
+agente inteligente es un agente racional capaz de pasar el test de
+Turing.
+
+\subsection{Arquitecturas de Agentes}
+
+Si estudiamos la estructura de los agentes de acuerdo a su \textbf{topología}
+podemos distinguir tres tipos:
+
+\begin{itemize}
+\item Arquitecturas horizontales: Todas las capas que constituyen el
+  agente son capaces de percibir estimulos del entorno y realizar
+  acciones.
+\item Una arquitectura vertical se carazteriza porque una capa es la
+  encargada de percibir el entorno y transmite la información de
+  manera lineal entre capas hasta una última que es la que se encarga
+  de realizar las acciones.
+\item Por último en la estructura híbrida tenemos un compartamiento
+  similar a la estructura vertical pero es la capa que percibe el
+  entorno la que se encarga de realizar las acciones y todas las capas
+  en forma de cadena reciben información y transmite información.
+\end{itemize}
+
+En función de su nivel nivel de \textbf{abstracción} podemos
+clasificar los agentes en:
+
+\begin{itemize}
+\item Deliberativos: Cuentan con un modelo del entorno donde se
+  encuentran y lo utilizan para planificar sus acciones para conseguir
+  su objetivo.
+\item Reactivos: Actuan en función del entorno que perciben por sus
+  sensores. Operan rápido y eficazmente sin la necesidad de una
+  representación interna del entorno. Existen agentes reactivos con
+  memoria que almacenan acciones anteriores y pueden llegar a llevar
+  una pequeña representación del mundo en el que se mueven.
+\item Hibridos: Una mezcla entre reactivo y deliberativo, recomendada
+  para muchos problemas, ya que si durante el desarrollo de un plan
+  ocurren problemas, se necesitan decisiones reactivas para poder
+  esquivar el problema y continuar la ejecución del agente.
+\end{itemize}
+
+
+\section{Características de los Agentes reactivos y deliberativos. Similitudes y diferencias. Arquitecturas.}
+
+Comencemos por entender como funciona cada tipo de agente:
+
+Un agente reactivo tras percibir el entorno a través de sus sensores
+procesa la información y construye una representación interna
+basandose en lo que ha captado. Entonces escoge una acción y la
+transforma en señales para que sea realizada.
+
+Los agentes deliberativos disponen de un modelo del mundo y otro de
+los efectos de sus acciones en el mismo. Un agente deliberativo decide
+que hacer después de razonar sobre estos modelos con el fin de
+conseguir su objetivo.
+
+\textbf{Agentes reactivos:}
+\begin{itemize}
+\item Su comportamiento se diseña de manera explicita y es necesario
+  anticipar todas las situaciones posibles en el medio.
+\item Realizan pocos calculos
+\item Almacenan todo en memoria
+\item Usan arquitecturas horizontales
+\end{itemize}
+
+\textbf{Agentes deliberativos}
+\begin{itemize}
+\item Tienen un conocimiento del mundo
+\item Elaboran planes en función de los efectos de sus acciones razonando sobre sus modelos
+\item Usan arquitecturas verticales
+\end{itemize}
+
+\section{Describir brevemente los métodos de búsqueda no informada.}
+
+Los métodos de búsqueda no informada son estategias de búsqueda en las
+que se evalua si el siguiente estado, que a priori no se conoce, es
+mejor o peor que el anterior. Se denominan de esta manera porqu no
+tenemos conocimiento previo de la longitud o coste de la solución.
+
+\subsection{Búsqueda en anchura}
+
+Algoritmo basado en grafos en el que se expanden los nodos en el orden
+que fueron alcanzados. Se caracteriza porque:
+
+\begin{itemize}
+\item Siempre encuentra la solución \textit{menos profunda} primero.
+\item Claramente es completo ya que recorre todos los posibles estados
+\item La solución es óptima supuesto que todas las acciones tengan
+  igual costo no negativo.
+\end{itemize}
+
+Vemos la frontera como una cola FIFO.
+
+Si notamos por $b$ una cota de los hijos de cada nodo y $d$ la
+longitud de la solución menos profunda el coste computaciones es
+$\sum_{i=1}^{d}b^i \in O(b^d)$. Cada nodo que se genera se almacena en
+memoria luego el coste por almacenar en memoria también es $O(b^d)$.
+
+\includegraphics[width=\textwidth]{anchura}
+
+\subsection{Búsqueda en profundidad}
+
+Se basa en expandir el nodo más profundo de la frontera actual del
+árbol de búsqueda.
+
+Vemos la frontera como una cola LIFO. Comunmenete se ven de forma
+recursiva.
+
+\begin{itemize}
+\item En general la solución encontrada no es optima.
+\item La completitud está garantizada solo para la búsqueda en grafos
+  y con un espacio finito de estados.
+\end{itemize}
+
+Cabe la posibilidad de que se formen bucles si estamos explorando
+grafos con profundidad ilimitada. Para solucionar estre problema se
+puede usar una constante que limite la longitud del camino, esto se
+conoce como \textbf{método de búsqueda en profundidad limitata}.
+
+\includegraphics[width=\textwidth]{profundidad}
+
+\subsection{Búsqueda bidireccional}
+
+Se ejecutan dos búsquedas de manera simultanea. Se ejecuta una
+búsqueda desde la raiz hacia adelante y otra desde la solución hacia
+atrás (como si estuvieses deshaciendo el camino) parando cuando las
+dos se encuentran. Esta búsqueda comprueba si un nodo están en la
+frontera del otro arbol antes de expandirlo. Si esto ocurre devuelve
+la solución.
+
+
+\section{Heurísticas}
+
+\subsection{El concepto de heurística}
+
+La heurística trata de la resolución de problemas aplicando soluciones
+parciales, a menudo intuitivas. Se procede por un metodo iterativo
+que, poco a poco, se aproxima a la una solución o resultado. Una
+heurística es un criterio, método o principio para decidir que acción
+es más apropiada entre un conjunto de acciones para lograr un
+objetivo.
+
+Necesitamos que las heurística elegida funcione de la mejor manera
+posible por lo que hay que encontrar un equilibrio entre que sean
+simples y nos permitan discriminar de la mejor manera posible.
+
+La capacidad heurística es un rasgo característico de nuestra especie,
+desde cuyo punto de vista puede describirse como el arte y la ciencia
+del descubrimiento y de la invención o de resolver problemas mediante
+la creatividad y el pensamiento lateral.
+
+\subsection{Como se construyen las heurísticas}
+
+No se tiene un método científico que permita encontrar
+una heurísitca pero una buena opción para construir una es partir de
+una simplificación del problema donde se relajan algunas condiciones
+del problema.
+
+Tambíen existen tecnicas como\textit{Pattern databases} que son
+métodos computables para derivar de manera automática valores
+heurísticas de distintas configuraciones las cuales se almacenan en
+una base de datos.
+
+\subsection{Uso de las heurísticas en IA}
+
+Cuando en IA necesitamos realizar búsquedasm, recurrimos normalmente
+de herurísticas. Una heurística encapsula el conocimiento experto que
+se tiene sobre un problema y sirve de guía para el algoritmo de
+búsqueda.
+
+Un método heurístico no garantiza que obtengamos la solución óptima,
+pero produce resultados satisfactorios. Bajo ciertas circustancias una
+heurística puede devolver los resultados óptimos pero requiere
+demostrarlo.
+
+Si consideramos los casos que usan mapas algunas heurísticas que se
+suelen usar son:
+
+\begin{itemize}
+\item En mapas en las que nos movemos en 4 direcciones usamos la
+  distancia Manhattan.
+\item Si nos podemos mover en las 8 direcciones usamos la distancia Diagonal ($L_\infty$)
+\item Si se permite cualquier dirección la distancia euclidea no suele ser buena.
+\item En mapas hexagonales en los que nos movemos en 6 direcciones se
+  puede usar la distancia Manhattan adaptada.
+\end{itemize}
+
+\section{Los métodos de escalada. Caracterización general. Variantes}
+
+Son metodos de búsqueda con información basados en la búsqueda en
+profundidad. Son métodos de búsqueda locacl que parten de un nodo
+incial y profundizan en la búsqueda seleccionando el mejor hijo,
+reiterando mientras el hijo que se encuentra sea mejor que el padre.
+Por este motivo no siempre tiene por qué encontrarse una solución, el
+método se puede quedar en extremos locales. Si usamos una función para
+representar el problema, esto ocurre si la función no es
+monótona. Estos metodos no tienen por qué encontrar la solución óptima
+pero si encuentran solución al menos encuentran una solución que
+óptima localmente.
+
+En la \textbf{Escalada simple} se escoje el primer nodo más cercano,
+mientras que en la \textbf{escalada de ascenso pronunciado} todos los
+sucesores son comparados y se elige la solución más cercana. Ambas
+formas fallan si no existe un nodo cercano, lo cual sucede si hay
+máximos locales en el espacio de búsqueda que no son soluciones. La
+escalada de ascenso pronunciado es similar a la búsqueda en anchura,
+la cual intenta todas las posibles extensiones del camino actual en
+vez de sólo una.
+
+El \textbf{descenso coordinado} minimiza a lo largo de una coordenada
+para minimizar el valor de una función.
+
+La \textbf{escalada estocástica} escoge aleatoriamente entre los
+sucesores con mejor valoración que el estado actual.
+
+La \textbf{escalada de reinicio aleatorio} comienza en diferentes
+ocasiones cada vez con una condición inicial aleatoria y se itera
+sobre el conjuntos de elementos gurdando la mejor solución obtenida.
+Destaca por lo sorprendentemente efectivo que es en muchos casos.
+
+Una manera de evitar que los metodos de escalada se queden estancados
+en óptimos locales es usar el algoritmo de enfriamiento simulado que
+permite que en el inicio se avance a soluciones peores y la
+probabilidad de hacerlo disminuye conforme se avanza en la búsqueda.
+
+
+\section{Características esenciales de los métodos “primero el mejor”}
+
+Los metodos de ``Primero el mejor'' se caracterizan por ser
+estrategias de búsqueda informada en la que se usan algoritmos de
+búsqueda en árboles y grafos. Se elige si se explora un nodo o no en
+función de la evaluación de una función heurística para ese nodo.
+
+Guarda semejanza con la búsqueda primero en profundidad pero vuelve
+atrás cuando no es óptimo contiunuar. Por esto sufre de los mismos
+problemas como que no es óptima la búsqueda y es incompleta (puede
+profundizar indefinidamente). La complejitad es $O(bm)$ donde m es la
+profundidad máxima del espacio de búsqueda pero puede reducirse en
+función del problema en particular y la función heurística escogida.
+
+\section{Elementos esenciales del algoritmo A*}
+
+El algoritmo A* es algoritmo de \textbf{Primero el mejor} y una
+variante del algoritmo de Djistra.
+
+Se guía por una formula
+
+\[
+  F(x) = G(x) + H(x)
+\]
+
+donde $G(x)$ es la distancia del nodo inicial hasta el nodo $x$ y
+$H(x)$ es una heurística que mide la distancia desde el nodo actual al
+objetivo.
+
+Al igual que se hacía en algoritmo de Djistra en cada paso se elige el
+nodo más prometedor con al función $F$ y es este el que se expande.
+Es una búsqueda en anchura y se puede abandonar una rama y explorar
+una nueva.
+
+Podemos decir que los elementos esenciales para un algoritmo A* son:
+
+\begin{itemize}
+\item Un grafo de búsqueda
+\item Un conjunto de nodos abiertos y nodos cerrados
+\item Una función que mida distancias
+\item Una función basada en una heurística
+\end{itemize}
+
+\section{Elementos esenciales de un algoritmo genético}
+
+Los algoritmos genéticos son muy usados cuando se pretende optimizar
+un resultado y cuando se está realizando búsquedas de
+soluciones. Aplican estrategias biológicas basadas en la reproducción
+sexual, la mutación y en la adaptación.
+
+Se utilizan los siguientes teccnicismos:
+
+\begin{itemize}
+\item Cromosomas: Representación de una solución al problema
+\item Gen: Atributo concreto del vector de representación de una solución
+\item Problación: Conjunto de soluciones que se crean para el problema
+\item Adecuación al entorno o fitness: Valor de la función objetivo
+\item Selección natural: Operador de selección
+\item Mutación: Operador de modificación
+\item Cambio generacional: Operador de reemplazamiento
+\end{itemize}
+
+El modo en el que funcionan este tipo de algoritmos es el siguiente:
+
+Se genera aleatoriamente una población inicial. Esta población se
+constituye de cromosomas que representan las posibles soluciones del
+problema.
+
+A cada cromosoma se le aplica una función de \textit{fitness} que
+actua como función que nos permite comparar soluciones.
+
+En general se desconoce cual es la solución óptima, así que se
+utilizan dos criterios: limitar el número de iteraciones
+(generaciones) o detenerlos cuando el cambio que se produzca sea menor
+que un humbral. En cada paso se realizan las siguientes acciones:
+
+\begin{enumerate}
+\item Selección: Después de conocer la aptitud de cada cromosoma se
+  eligen aquellos que se van a utilizar para realizar el cruce (la
+  reproducción). Cuanto mayor sea la aptitud, mayor es la probabilidad
+  de ser usado para el cruce.
+
+\item Recombinación o cruzamiento: El cruzamiento es el principal
+  operador, opera sobre dos cromosomas a la vez y genera dos
+  descendientes donde se combinan características de ambos cromosomas
+  según algún criterio escogido a priori.
+
+\item Mutación: Al azar se modifica parte del cromosoma para alcanzar
+  zonas del espacio de búsqueda que no estaban cubiertas por los
+  individuos de la población actual.
+
+\item Reemplazo: Una vez se han aplicado los operadores, se escogen
+  los mejores individuos que forman la población de la generación
+  siguiente.
+\end{enumerate}
+
+\begin{thebibliography}{9}
+\bibitem{clase} 
+Material proporcionado por el profesor
+D. Miguel Delgado Calvo-Florer. Departamento de Computación e inteligencia Artificial, Universidad de Granada
+ 
+\bibitem{dipositivas} 
+Foundations of Artificial Intelligence
+Problem-Solving Agents, Formulating Problems, Search Strategies
+Joschka Boedecker and Wolfram Burgard and Bernhard Nebel, Albert-Ludwigs-Universität Freiburg
+\texttt{http://ais.informatik.uni-freiburg.de/teaching/ss17/ki/slides/}
+\bibitem{heuristics}
+  Heuristics-From Amit’s Thoughts on Pathfinding\\
+  \texttt{http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html}
+\bibitem{creatingheuristics}
+  \texttt{https://cs.stackexchange.com/questions/19976/creating-admissible-heuristics-
+    from-functions}
+\end{thebibliography}
+
+
+\end{document}
