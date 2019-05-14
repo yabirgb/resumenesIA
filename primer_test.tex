@@ -16,7 +16,7 @@
 \usepackage{amssymb}
 \usepackage{hyperref}
 \usepackage[margin=1in]{geometry}
-\author{Yábir García Benchakhtir \\yabirgb@correo.ugr.es}
+\author{Yábir García Benchakhtir, Francisco Miguel Castro Macías\\yabirgb@correo.ugr.es}
 \date{\today}
 \title{Apuntes sobre IA: Parte 1}
 \hypersetup{
@@ -62,24 +62,15 @@ En resumen, un sistema para ser un agente debe:
 
 \subsection{Agentes Racionales vs. Agentes Inteligentes}
 
-Decimos que un agente es racional cuando es capaz de actuar
-racionalmente. Esto quiere decir que depende de tomar mediciones de su
-entorno, tener conocimiento sobre el mismo y elegir entre un conjuntos
-de posibles acciones la que mejor resultado tenga para conseguir el
-objetivo que se propone.
+Considerando el test de Turing, diremos que un agente inteligente es
+aquel capaz de pasarlo, entendiendo por pasarlo conseguir engañar al
+entrevistador que evalua al agente. Es decir, un agente es inteligente
+cuando consigue que el entrevistador no sea capaz de decidir si es un
+humano o no lo es.
 
-Un agente inteligente actua de manera similar, toma mediciones de su
-entorno usando sensores, tiene un conocimiento del medio pero además
-internamenete es capaz de comprender y tiene intencionalidad en sus
-acciones.
-
-Es decir, un agente inteligente no actua como una simple función que
-relaciona un conjunto de estados a un conjunto de acciones sino que
-comprende que es lo que está sucediendo y actua siguiendo su criterio.
-Si consideramos el \textit{Test de Turing} como un criterio valido
-para evaluar la inteligencia de un agente, podríamos decir que un
-agente inteligente es un agente racional capaz de pasar el test de
-Turing.
+Un agente racional es aquel que intenta para cada situación elegir la
+mejor de las opciones disponibles. Requiere de una medida que le diga
+lo bueno que es un resultado.
 
 \subsection{Arquitecturas de Agentes}
 
@@ -316,32 +307,21 @@ función del problema en particular y la función heurística escogida.
 
 \section{Elementos esenciales del algoritmo A*}
 
-El algoritmo A* es algoritmo de \textbf{Primero el mejor} y una
-variante del algoritmo de Djistra.
+El algoritmo A* es un algoritmo se tipo ``Primero el mejor'' donde la función de evaluación es la suma de dos componentes:$$f(n)=g(n)+h(n)$$ La función $g(n)$ indica la distancia del mejor camino obtenido hasta el momento (desde el nodo inicial hasta el nodo $n$), $h(n)$ es la heurística y expresa la distancia estimada entre el nodo $n$ hasta el nodo objetivo. Así $f(n)$ expresa el coste más barato estimado de la solución a través de $n$.
 
-Se guía por una formula
+A la hora de llevarlo a cabo se cuenta con una lista de abiertos donde se encuentran los nodos que se han generado pero aún no se han expandido, ordenados según la función. También se tiene una lista de cerrados, donde están los nodos que ya se han expandido. En cada paso se selecciona el nodo más prometedor de los abiertos y se incluyen en los cerrados. A continuación se generan todos sus sucesores y se incluyen en los abiertos. Si alguno de ellos es el nodo objetivo, se acaba. Si no, se contunúa.
 
-\[
-  F(x) = G(x) + H(x)
-\]
+Es una búsqueda en anchura en la cual podemos abandonar temporalmente una rama que no parace prometedora y continuar con otra.
 
-donde $G(x)$ es la distancia del nodo inicial hasta el nodo $x$ y
-$H(x)$ es una heurística que mide la distancia desde el nodo actual al
-objetivo.
+\subsection{Propiedades}
 
-Al igual que se hacía en algoritmo de Djistra en cada paso se elige el
-nodo más prometedor con al función $F$ y es este el que se expande.
-Es una búsqueda en anchura y se puede abandonar una rama y explorar
-una nueva.
+Si denotamos $h$*$(x)$ al coste del camino óptimo para alcanzar la solución desde el nodo $x$, el coste del camino óptimo desde el nodo inicial hasta el final pasando por $x$ es $f$*$(x)=g(x)+h$*$(x)$. Lo que hacemos es estimar $h$*$(x)$ mediante $h(x)$. Supondremos siempre que $h(x)\geq 0$.
 
-Podemos decir que los elementos esenciales para un algoritmo A* son:
+Una heurística es admirable si cumple que $h(x) \leq h$*$(x)$ para todo $x$. Una heurística admirable alcanzará la solución óptima. Si dos heurísticas $h_1(x)$ y $h_2(x)$ cumplen $h_1(x) \leq h_2(x) \leq h$*$(x)$ para cada nodo $x$ entonces $h_2(x)$ está mejor informada que $h_1(x)$ ya que se acerca más a $h$*$(x)$, y requerirá menos pasos para alcanzar la solución.
 
-\begin{itemize}
-\item Un grafo de búsqueda
-\item Un conjunto de nodos abiertos y nodos cerrados
-\item Una función que mida distancias
-\item Una función basada en una heurística
-\end{itemize}
+Una heurística es consistente si $h(x) - h(y) \leq c(x,y)$ donde $y$ es el sucesor de $x$ y $c(x,y)$ es el coste del arco que une $x$ con $y$. En este caso, $F$ es no decreciente y cada vez que se expande un nodo se ha encontrado el camino óptimo al mismo.
+
+Como limitaciones tenemos que la expansión de un número grande de nodos puede llevar al algoritmo a agotar la memoria del computador. Además puede no ser viable encontrar una heurística admisible y consistente para algún problema.
 
 \section{Elementos esenciales de un algoritmo genético}
 
