@@ -140,6 +140,66 @@ conseguir su objetivo.
 \item Usan arquitecturas verticales
 \end{itemize}
 
+\subsection{Arquitecturas de agentes reactivos}
+\begin{itemize}
+\item Sistemas de producción:
+  \begin{enumerate}
+  \item Se selecciona la primera regla y se comprueba si se cumple su condición. 
+    En caso contrario, se continúa con la siguiente hasta que se encuentre una 
+    regla cuya condición se cumpla.
+  \item La acción de la primera regla encontrada cuya condición se cumple es la 
+    que se ejecuta. Su acción puede ser:
+    \begin{enumerate}
+    \item La ejecución de una o varias acciones primitivas
+    \item Una llamada a otro sistema de producción
+    \end{enumerate}
+  \item Acción por defecto: La última regla de producción debe ser del tipo 
+    1 $\rightarrow$ A, para ejecutar una acción en caso de que ninguna de las 
+    reglas anteriores cumpla su condición de ejecución.
+  \end{enumerate}
+\item Redes neuronales: Red de unidades lógicas con umbral.
+\item Arquitectura de subsunción:
+	\begin{itemize}
+  \item Módulos de comportamiento agrupados, cada uno con una acción y condición asociadas. 
+  \item Se recibe la percepción: Si se cumple la condición el módulo devuelve la acción.
+  \item Un módulo se puede subsumir en otro: Si el módulo superior se cumple, se 
+    ejecuta éste en lugar de los inferiores.
+	\end{itemize}
+\item Agentes reactivos con memoria:
+	\begin{itemize}
+  \item Mejora la presición teniendo en cuenta la historia sensorial previa.
+  \item Se puede implementar con los sistemas basados en pizarras:
+	  \begin{itemize}
+    \item Son extensiones de los sistemas de producción.
+    \item Módulos de conocimiento (MC): Programas constituidos por una condición 
+      y una acción que son expertos en un área concreta del problema.
+    \item Pizarra: Memoria común a todos los MCs que alberga la solución que se 
+      está construyendo conforme al objetivo del agente.
+    \item Cuando se cumple la condición de un MC, éste puede tanto actualizar 
+      la pizarra como realizar una acción.
+    \item Necesario un programa de resolución de conflictos para cuando dos MCs 
+      puedes actuar simultáneamente.
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+\subsection{Arquitecturas de agentes deliberativos}
+\begin{itemize}
+\item Arquitectura BDI (Beliefs, Desires, Intentions): Constituida por los siguientes elementos:
+  \begin{itemize}
+  \item Creencias (Beliefs): Conocimiento del agente sobre el entorno.
+  \item Deseos (Desires): Hechos que el agente podría querer que se cumpliesen 
+    en un estado futuro.
+  \item Objetivos: Subconjunto de deseos realistas y consistentes entre sí que 
+    el agente podría perseguir.
+  \item Intenciones (Intentions): Subconjunto de los objetivos que el agente 
+    está persiguiendo en el presente.
+  \item Planes: Reflejan las acciones a desarrollar por el agente para lograr 
+    sus intenciones.
+  \end{itemize}
+\end{itemize}
+
+
 \section{Describir brevemente los métodos de búsqueda no informada.}
 
 Los métodos de búsqueda no informada son estategias de búsqueda en las
