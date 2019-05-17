@@ -1,3 +1,3 @@
 # Importante
 
-Este resumen **NO** está terminado y contiene errores. Usar bajo propia responsabilidad.
+Este resumen está terminado pero puede contener errores. Usar bajo propia responsabilidad.

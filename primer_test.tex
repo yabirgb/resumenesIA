@@ -16,7 +16,7 @@
 \usepackage{amssymb}
 \usepackage{hyperref}
 \usepackage[margin=1in]{geometry}
-\author{Yábir García Benchakhtir, Francisco Miguel Castro Macías\\yabirgb@correo.ugr.es}
+\author{Yábir García Benchakhtir, Francisco Miguel Castro Macías, \\ Alejandro Miguel Palencia Blanco}
 \date{\today}
 \title{Apuntes sobre IA: Parte 1}
 \hypersetup{
@@ -29,15 +29,17 @@
 
 \maketitle
 
+Este resumen está terminado pero puede tener errores.
+
 \section{Agentes}
 
 \subsection{El concepto de Agente}
 
 Un agente es cualquier cosa capaz de percibir su entorno con la ayuda
 de sensores y actuar utilizando actuadores. Entendemos por actuador al
-elemento que reacciona a un estı́mulo mediante una acción.  La
+elemento que reacciona a un estímulo mediante una acción.  La
 secuencia de percepciones de un agente refleja el historial completo
-de lo que el agente ha reci- bido. Un agente tomará una decisión en un
+de lo que el agente ha recibido. Un agente tomará una decisión en un
 momento dado dependiendo de la secuencia completa o de una parte de
 ella. En términos matemáticos se puede decir que el comportamiento del
 agente viene dado por la función del agente que a cada percepción le
@@ -249,7 +251,7 @@ una base de datos.
 \subsection{Uso de las heurísticas en IA}
 
 Cuando en IA necesitamos realizar búsquedasm, recurrimos normalmente
-de herurísticas. Una heurística encapsula el conocimiento experto que
+de heurísticas. Una heurística encapsula el conocimiento experto que
 se tiene sobre un problema y sirve de guía para el algoritmo de
 búsqueda.
 
@@ -335,17 +337,44 @@ Variantes:
 
 \section{Características esenciales de los métodos “primero el mejor”}
 
-Los metodos de ``Primero el mejor'' se caracterizan por ser
-estrategias de búsqueda informada en la que se usan algoritmos de
-búsqueda en árboles y grafos. Se elige si se explora un nodo o no en
-función de la evaluación de una función heurística para ese nodo.
+Los metodos de \textit{Primero el mejor} se caracterizan por expandir
+el mejor de los nodos encontrados en cada momento bajo la hipotesis de
+que esto servirá para acercarse a la solución de manera más rápida.
 
-Guarda semejanza con la búsqueda primero en profundidad pero vuelve
-atrás cuando no es óptimo contiunuar. Por esto sufre de los mismos
-problemas como que no es óptima la búsqueda y es incompleta (puede
-profundizar indefinidamente). La complejitad es $O(bm)$ donde m es la
-profundidad máxima del espacio de búsqueda pero puede reducirse en
-función del problema en particular y la función heurística escogida.
+En su desarrollo se usan dos listas, una de nodos abiertos y otra de
+nodos cerrados. En la lista de nodos abiertos mantenemos aquellos
+nodos que se han generado pero que todavía no han sido analizados con
+la función heurística, es decir, no se han generados sucesores a
+partir de ellos. Es una lista que se ordena en función del valor
+asignado por la heurística.
+
+
+En la lista de cerrados manetenemos los nodos que ya se han examinado
+y se usa para saber cuando un nodo ha sido visitado con anterioridad.
+
+El procedimiento es el siguiente:
+
+\begin{enumerate}
+\item Se crea un grafo de búsqueda G con un nodo inicial \textit{I}
+\item Se inicializa la lista de abiertos con I y la de cerrados vacía. Se inicializa también la variable exito a un valor \textit{False}.
+\item Mientras Abierto no esté vacío o exito no sea \textit{True}
+  \begin{enumerate}
+  \item Quitar el primer nodo de abiertos (N) y meterlo en cerrados.
+  \item Si N es el estado final entonces exito es \textit{True}
+  \item Si no expandir N generando el conjunto S de sucesores de N que
+    no son antecesores de N en el grafo.
+  \item Generar un nodo en G por cada s de S
+  \item Establecer un puntero a N desde aquellos s de S que no
+    estuvieran en G y añadirlos a abiertos.
+  \item Para cada s de S que estuviera ya en Abiertos o Cerrados decidir si redirigir sus punteros hacia N
+  \item Para cada s de S que estuviera en Cerrados decidir si
+    rederigir los punteros de los nodos en sus subárboles.
+  \item Reordenar Abiertos según f(n)
+  \end{enumerate}
+\item Si exito entonces Solución es el camino desde I a N a traves de los punteros de G
+\item Si no hay exito entonce la solución es un fracaso.
+\end{enumerate}
+
 
 \section{Elementos esenciales del algoritmo A*}
 
