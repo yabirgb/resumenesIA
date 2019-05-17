@@ -7,8 +7,8 @@
 \usepackage{longtable}
 \usepackage{float}
 \usepackage{wrapfig}
-\usepackage{rotating}
-\usepackage[normalem]{ulem}
+%\usepackage{rotating}
+%\usepackage[normalem]{ulem}
 \usepackage{amsmath}
 \usepackage{textcomp}
 \usepackage{marvosym}
@@ -35,9 +35,9 @@
 
 Un agente es cualquier cosa capaz de percibir su entorno con la ayuda
 de sensores y actuar utilizando actuadores. Entendemos por actuador al
-elemento que reacciona a un estı́mulo mediante una acción.  La
+elemento que reacciona a un estímulo mediante una acción.  La
 secuencia de percepciones de un agente refleja el historial completo
-de lo que el agente ha reci- bido. Un agente tomará una decisión en un
+de lo que el agente ha recibido. Un agente tomará una decisión en un
 momento dado dependiendo de la secuencia completa o de una parte de
 ella. En términos matemáticos se puede decir que el comportamiento del
 agente viene dado por la función del agente que a cada percepción le
@@ -57,6 +57,8 @@ humano o no lo es.
 Un agente racional es aquel que intenta para cada situación elegir la
 mejor de las opciones disponibles. Requiere de una medida que le diga
 lo bueno que es un resultado.
+
+\textit{Un agente racional lo podemos construir pero un inteligente no.}
 
 \subsection{Arquitecturas de Agentes}
 
@@ -130,7 +132,7 @@ conseguir su objetivo.
 
 Los métodos de búsqueda no informada son estategias de búsqueda en las
 que se evalua si el siguiente estado, que a priori no se conoce, es
-mejor o peor que el anterior. Se denominan de esta manera porqu no
+mejor o peor que el anterior. Se denominan de esta manera porque no
 tenemos conocimiento previo de la longitud o coste de la solución.
 
 \subsection{Búsqueda en anchura}
@@ -209,15 +211,15 @@ una heurísitca pero una buena opción para construir una es partir de
 una simplificación del problema donde se relajan algunas condiciones
 del problema.
 
-Tambíen existen tecnicas como\textit{Pattern databases} que son
+Tambíen existen tecnicas como \textit{Pattern databases} que son
 métodos computables para derivar de manera automática valores
-heurísticas de distintas configuraciones las cuales se almacenan en
+heurísticos de distintas configuraciones las cuales se almacenan en
 una base de datos.
 
 \subsection{Uso de las heurísticas en IA}
 
-Cuando en IA necesitamos realizar búsquedasm, recurrimos normalmente
-de herurísticas. Una heurística encapsula el conocimiento experto que
+Cuando en IA necesitamos realizar búsquedas, recurrimos normalmente
+a herurísticas. Una heurística encapsula el conocimiento experto que
 se tiene sobre un problema y sirve de guía para el algoritmo de
 búsqueda.
 
@@ -240,16 +242,17 @@ suelen usar son:
 
 \section{Los métodos de escalada. Caracterización general. Variantes}
 
-Son metodos de búsqueda con información basados en la búsqueda en
-profundidad. Son métodos de búsqueda locacl que parten de un nodo
-incial y profundizan en la búsqueda seleccionando el mejor hijo,
-reiterando mientras el hijo que se encuentra sea mejor que el padre.
-Por este motivo no siempre tiene por qué encontrarse una solución, el
-método se puede quedar en extremos locales. Si usamos una función para
-representar el problema, esto ocurre si la función no es
-monótona. Estos metodos no tienen por qué encontrar la solución óptima
-pero si encuentran solución al menos encuentran una solución que
-óptima localmente.
+Son metodos de búsqueda con información centrados en la vecindad. La
+diferencia entre los distintos metodos de escalada radica en la
+técnica de anális del vecindario que se ha construido. Son métodos de
+búsqueda local que parten de un nodo incial y profundizan en la
+búsqueda seleccionando el mejor hijo, reiterando mientras el hijo que
+se encuentra sea mejor que el padre. Por este motivo no siempre tiene
+por qué encontrarse una solución, el método se puede quedar en
+extremos locales. Si usamos una función para representar el problema,
+esto ocurre si la función no es monótona. Estos metodos no tienen por
+qué encontrar la solución óptima pero si encuentran solución,sabemos
+que al menos encuentran una solución que es óptima localmente.
 
 En la \textbf{Escalada simple} se escoje el primer nodo más cercano,
 mientras que en la \textbf{escalada de ascenso pronunciado} todos los
@@ -279,17 +282,58 @@ probabilidad de hacerlo disminuye conforme se avanza en la búsqueda.
 
 \section{Características esenciales de los métodos “primero el mejor”}
 
-Los metodos de ``Primero el mejor'' se caracterizan por ser
-estrategias de búsqueda informada en la que se usan algoritmos de
-búsqueda en árboles y grafos. Se elige si se explora un nodo o no en
-función de la evaluación de una función heurística para ese nodo.
+Los metodos de \textit{Primero el mejor} se caracterizan por expandir
+el mejor de los nodos encontrados en cada momento bajo la hipotesis de
+que esto servirá para acercarse a la solución de manera más rápida.
 
-Guarda semejanza con la búsqueda primero en profundidad pero vuelve
-atrás cuando no es óptimo contiunuar. Por esto sufre de los mismos
-problemas como que no es óptima la búsqueda y es incompleta (puede
-profundizar indefinidamente). La complejitad es $O(bm)$ donde m es la
-profundidad máxima del espacio de búsqueda pero puede reducirse en
-función del problema en particular y la función heurística escogida.
+En su desarrollo se usan dos listas, una de nodos abiertos y otra de
+nodos cerrados. En la lista de nodos abiertos mantenemos aquellos
+nodos que se han generado pero que todavía no han sido analizados con
+la función heurística, es decir, no se han generados sucesores a
+partir de ellos. Es una lista que se ordena en función del valor
+asignado por la heurística.
+
+
+En la lista de cerrados manetenemos los nodos que ya se han examinado
+y se usa para saber cuando un nodo ha sido visitado con anterioridad.
+
+El procedimiento es el siguiente:
+
+\begin{enumerate}
+\item Se crea un grafo de búsqueda G con un nodo inicial \textit{I}
+\item Se inicializa la lista de abiertos con I y la de cerrados vacía. Se inicializa también la variable exito a un valor \textit{False}.
+\item Mientras Abierto no esté vacío o exito no sea \textit{True}
+  \begin{enumerate}
+  \item Quitar el primer nodo de abiertos (N) y meterlo en cerrados.
+  \item Si N es el estado final entonces exito es \textit{True}
+  \item Si no expandir N generando el conjunto S de sucesores de N que
+    no son antecesores de N en el grafo.
+  \item Generar un nodo en G por cada s de S
+  \item Establecer un puntero a N desde aquellos s de S que no
+    estuvieran en G y añadirlos a abiertos.
+  \item Para cada s de S que estuviera ya en Abiertos o Cerrados decidir si redirigir sus punteros hacia N
+  \item Para cada s de S que estuviera en Cerrados decidir si
+    rederigir los punteros de los nodos en sus subárboles.
+  \item Reordenar Abiertos según f(n)
+  \end{enumerate}
+\item Si exito entonces Solución es el camino desde I a N a traves de los punteros de G
+\item Si no hay exito entonce la solución es un fracaso.
+\end{enumerate}
+
+
+%% Los metodos de ``Primero el mejor'' se caracterizan por ser
+%% estrategias de búsqueda informada en la que se usan algoritmos de
+%% búsqueda en árboles y grafos. Se elige si se explora un nodo o no en
+%% función de la evaluación de una función heurística para ese nodo.
+
+%% Guarda semejanza con la búsqueda primero en profundidad pero vuelve
+%% atrás cuando no es óptimo contiunuar. Por esto sufre de los mismos
+%% problemas como que no es óptima la búsqueda y es incompleta (puede
+%% profundizar indefinidamente). La complejitad es $O(bm)$ donde m es la
+%% profundidad máxima del espacio de búsqueda pero puede reducirse en
+%% función del problema en particular y la función heurística escogida.
+
+
 
 \section{Elementos esenciales del algoritmo A*}
 
