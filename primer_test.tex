@@ -270,43 +270,67 @@ suelen usar son:
   puede usar la distancia Manhattan adaptada.
 \end{itemize}
 
+
 \section{Los métodos de escalada. Caracterización general. Variantes}
 
-Son metodos de búsqueda con información basados en la búsqueda en
-profundidad. Son métodos de búsqueda locacl que parten de un nodo
-incial y profundizan en la búsqueda seleccionando el mejor hijo,
-reiterando mientras el hijo que se encuentra sea mejor que el padre.
-Por este motivo no siempre tiene por qué encontrarse una solución, el
-método se puede quedar en extremos locales. Si usamos una función para
-representar el problema, esto ocurre si la función no es
-monótona. Estos metodos no tienen por qué encontrar la solución óptima
-pero si encuentran solución al menos encuentran una solución que
-óptima localmente.
+Los métodos de escalada se basan en búsqueda local, que consiste en seleccionar 
+la solución mejor en el vecindario de una solución inicial, e ir viajando por 
+las soluciones del espacio hasta encontrar un óptimo (local o global). Los 
+diferentes métodos de búsqueda local se diferencian en la forma en que 
+determinan la vecindad de cada nodo. 
 
-En la \textbf{Escalada simple} se escoje el primer nodo más cercano,
-mientras que en la \textbf{escalada de ascenso pronunciado} todos los
-sucesores son comparados y se elige la solución más cercana. Ambas
-formas fallan si no existe un nodo cercano, lo cual sucede si hay
-máximos locales en el espacio de búsqueda que no son soluciones. La
-escalada de ascenso pronunciado es similar a la búsqueda en anchura,
-la cual intenta todas las posibles extensiones del camino actual en
-vez de sólo una.
+Este tipo de métodos se usan en problemas en los que el camino al objetivo no 
+es relevante, sino el objetivo en sí, pues durante su ejecución únicamente 
+guardan aquellos nodos para los que se va a hallar su vecindad. Esto hace 
+que tengan dos ventajas claves con respecto a su eficiencia:
+\begin{itemize}
+\item Usan muy poca memoria (por lo general una cantidad constante).
+\item Pueden encontrar a menudo soluciones razonables en espacios de estados 
+  muy grandes o infinitos.
+\end{itemize}
 
-El \textbf{descenso coordinado} minimiza a lo largo de una coordenada
-para minimizar el valor de una función.
+Otras características:
+\begin{itemize}
+\item Informado: Utiliza información del estado para elegir un nodo u otro.
+\item No completo: La existencia de máximos locales, crestas y mesetas hacen 
+  que este algoritmo no siempre alcance la mejor solución.
+\item Evita la exploración de una parte del espacio de estados.
+\item El algoritmo mejora considerablemente si la función es monótona.
+\end{itemize}
 
-La \textbf{escalada estocástica} escoge aleatoriamente entre los
-sucesores con mejor valoración que el estado actual.
-
-La \textbf{escalada de reinicio aleatorio} comienza en diferentes
-ocasiones cada vez con una condición inicial aleatoria y se itera
-sobre el conjuntos de elementos gurdando la mejor solución obtenida.
-Destaca por lo sorprendentemente efectivo que es en muchos casos.
-
-Una manera de evitar que los metodos de escalada se queden estancados
-en óptimos locales es usar el algoritmo de enfriamiento simulado que
-permite que en el inicio se avance a soluciones peores y la
-probabilidad de hacerlo disminuye conforme se avanza en la búsqueda.
+Variantes:
+\begin{itemize}
+\item Escalada simple: Considera que la vecindad de un nodo es un conjunto de 
+  hijos obtenidos secuencialmente hasta que aparece uno mejor que el padre. Así, 
+  se parte de un nodo inicial, se obtiene la vecindad de ese nodo, si ningún hijo 
+  es mejor que el padre se para, y en caso contrario el primer hijo mejor pasa a 
+  ser el nodo en curso y el proceso continúa.
+\item Escalada por la máxima pendiente: Considera que la vecindad de un nodo es 
+  el conjunto de todos sus hijos obtenidos secuencialmente. Se parte de un nodo 
+  inicial, se obtiene su vecindad, se selecciona al hijo mejor que pasa a ser el 
+  nodo en curso y el proceso continúa, y en caso de que no se obtenga un hijo 
+  mejor que el padre se para.
+\item Escalada estocástica: Escoge aleatoriamente entre los sucesores con 
+  mejor valoración que el estado actual.
+\item Escalada de primera opción: Se generan aleatoriamente sucesores, 
+  escogiendo el primero con mejor valoración que el estado actual.
+\item Escalada con reinicio aleatorio: Si falla la búsqueda, ésta se repite 
+  desde otro estado inicial hasta que encuentre la solución buscada. Si la 
+  probabilidad de éxito en la búsqueda es p, entonces el número de reinicios 
+  esperado es 1/p. Destaca por lo sorprendentemente efectivo que es en muchos casos.
+\item Temple simulado: 
+  Está basado en principios de la termodinámica. Su intención es evitar 
+  que la búsqueda finalice en un máximo local mediante la elección de algunos 
+  movimientos hacia peores soluciones de forma controlada. Se parte de una 
+  “temperatura” inicial y en cada iteración se escoge un 
+  movimiento aleatorio. Si el movimiento mejora la situación, siempre es 
+  aceptado. En caso contrario, la probabilidad de que sea escogido dependerá 
+  de la “maldad” de éste (cuanto peor sea, menor probabilidad) y de la 
+  temperatura en ese momento (a mayor temperatura, mayor probabilidad). La 
+  temperatura baja progresivamente con cada iteración, de modo que los “malos” 
+  movimientos serán más probables al comienzo del algoritmo. El temple simulado 
+  termina cuando se alcanza una temperatura final deseada.
+\end{itemize}
 
 
 \section{Características esenciales de los métodos “primero el mejor”}
