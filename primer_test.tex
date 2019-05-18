@@ -46,7 +46,7 @@ agente viene dado por la función del agente que a cada percepción le
 asocia una acción.  Un agente que cumpla lo anterior será autónomo (no
 necesita al humano) y proactivo (toma sus propias decisiones). Además,
 es deseable que sea social para servirse de otros agentes para lograr
-su objetivo
+su objetivo.
 
 \subsection{Agentes Racionales vs. Agentes Inteligentes}
 
@@ -59,6 +59,8 @@ humano o no lo es.
 Un agente racional es aquel que intenta para cada situación elegir la
 mejor de las opciones disponibles. Requiere de una medida que le diga
 lo bueno que es un resultado.
+
+Un agente racional lo podemos construir, un agente inteligente no.
 
 \subsection{Arquitecturas de Agentes}
 
@@ -243,14 +245,14 @@ una heurísitca pero una buena opción para construir una es partir de
 una simplificación del problema donde se relajan algunas condiciones
 del problema.
 
-Tambíen existen tecnicas como\textit{Pattern databases} que son
+Tambíen existen tecnicas como \textit{Pattern databases} que son
 métodos computables para derivar de manera automática valores
 heurísticas de distintas configuraciones las cuales se almacenan en
 una base de datos.
 
 \subsection{Uso de las heurísticas en IA}
 
-Cuando en IA necesitamos realizar búsquedasm, recurrimos normalmente
+Cuando en IA necesitamos realizar búsquedas, recurrimos normalmente
 de heurísticas. Una heurística encapsula el conocimiento experto que
 se tiene sobre un problema y sirve de guía para el algoritmo de
 búsqueda.
@@ -406,8 +408,8 @@ inicial hasta el final pasando por $x$ es $f$*$(x)=g(x)+h$*$(x)$. Lo
 que hacemos es estimar $h$*$(x)$ mediante $h(x)$. Supondremos siempre
 que $h(x)\geq 0$.
 
-Una heurística es admirable si cumple que $h(x) \leq h$*$(x)$ para
-todo $x$. Una heurística admirable alcanzará la solución óptima. Si
+Una heurística es admisible si cumple que $h(x) \leq h$*$(x)$ para
+todo $x$. Una heurística admisible alcanzará la solución óptima. Si
 dos heurísticas $h_1(x)$ y $h_2(x)$ cumplen
 $h_1(x) \leq h_2(x) \leq h$*$(x)$ para cada nodo $x$ entonces $h_2(x)$
 está mejor informada que $h_1(x)$ ya que se acerca más a $h$*$(x)$, y
@@ -421,7 +423,10 @@ nodo se ha encontrado el camino óptimo al mismo.
 Como limitaciones tenemos que la expansión de un número grande de
 nodos puede llevar al algoritmo a agotar la memoria del
 computador. Además puede no ser viable encontrar una heurística
-admisible y consistente para algún problema.
+admisible y consistente para algún problema. No en todos los problemas
+se conoce el estado final al que se desea llegar, en su lugar, se
+tiene una función objetivo que se desea optimizar. Es necesario
+conocer un estado inicial del que se parte para solucionar el problema.
 
 \section{Elementos esenciales de un algoritmo genético}
 
@@ -475,6 +480,8 @@ que un humbral. En cada paso se realizan las siguientes acciones:
   los mejores individuos que forman la población de la generación
   siguiente.
 \end{enumerate}
+
+\includegraphics[width=\textwidth]{gen}
 
 \begin{thebibliography}{9}
 \bibitem{clase} 
